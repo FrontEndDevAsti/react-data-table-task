@@ -2,33 +2,13 @@
 
 A modern React application built with TypeScript that displays data from the DummyJSON API in a responsive and interactive data table.
 
-## Features
-
-- Two main pages: Users and Products
-- Reusable components across pages
-- Data fetching with Axios
-- State management with Redux Toolkit
-- Responsive design with Tailwind CSS
-- Custom pagination
-- Client-side filtering
-- Server-side pagination
-
-## Tech Stack
-
-- React 19
-- TypeScript
-- Redux Toolkit
-- Axios
-- Lucide React
-- Tailwind CSS
-- Vite
-
 ## Getting Started
 
-### Prerequisites
+## Prerequisites
+Make sure you have the following installed before proceeding:
+- **Node.js** (version 14 or higher) → [Download here](https://nodejs.org/)
+- **Git** → [Download here](https://git-scm.com/)
 
-- Node.js (v14 or higher)
-- npm or yarn
 
 ### Installation
 
@@ -53,6 +33,28 @@ yarn dev
 ```
 
 4. Open your browser and navigate to `http://localhost:5173`
+
+## Features
+
+- Two main pages: Users and Products
+- Reusable components across pages
+- Data fetching with Axios
+- State management with Redux Toolkit
+- Responsive design with Tailwind CSS
+- Custom pagination
+- Client-side filtering
+- Server-side pagination
+
+## Tech Stack
+
+- React 19
+- TypeScript
+- Redux Toolkit
+- Axios
+- Lucide React
+- Tailwind CSS
+- Vite
+   
 
 ## Project Structure
 
