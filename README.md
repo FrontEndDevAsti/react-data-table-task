@@ -2,6 +2,38 @@
 
 A modern React application built with TypeScript that displays data from the DummyJSON API in a responsive and interactive data table.
 
+## Getting Started
+
+## Prerequisites
+Make sure you have the following installed before proceeding:
+- **Node.js** (version 14 or higher) → [Download here](https://nodejs.org/)
+- **Git** → [Download here](https://git-scm.com/)
+
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/FrontEndDevAsti/react-data-table-task.git
+cd react-data-table-task
+```
+
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn
+```
+
+3. Start the development server:
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+4. Open your browser and navigate to `http://localhost:5173`
+
 ## Features
 
 - Two main pages: Users and Products
@@ -22,37 +54,7 @@ A modern React application built with TypeScript that displays data from the Dum
 - Lucide React
 - Tailwind CSS
 - Vite
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js (v14 or higher)
-- npm or yarn
-
-### Installation
-
-1. Clone the repository:
-```bash
-git clone https://github.com/FrontEndDevAsti/react-data-table-task.git
-cd react-data-table
-```
-
-2. Install dependencies:
-```bash
-npm install
-# or
-yarn
-```
-
-3. Start the development server:
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-4. Open your browser and navigate to `http://localhost:5173`
+   
 
 ## Project Structure
 
