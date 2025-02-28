@@ -35,7 +35,7 @@ A modern React application built with TypeScript that displays data from the Dum
 1. Clone the repository:
 ```bash
 git clone https://github.com/FrontEndDevAsti/react-data-table-task.git
-cd react-data-table
+cd react-data-table-task
 ```
 
 2. Install dependencies:
