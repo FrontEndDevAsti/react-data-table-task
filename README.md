@@ -15,10 +15,11 @@ A modern React application built with TypeScript that displays data from the Dum
 
 ## Tech Stack
 
-- React 18
+- React 19
 - TypeScript
 - Redux Toolkit
 - Axios
+- Lucide React
 - Tailwind CSS
 - Vite
 
@@ -33,7 +34,7 @@ A modern React application built with TypeScript that displays data from the Dum
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/react-data-table.git
+git clone https://github.com/FrontEndDevAsti/react-data-table-task.git
 cd react-data-table
 ```
 
@@ -85,6 +86,4 @@ This project uses the [DummyJSON API](https://dummyjson.com/) for fetching data:
 - Users: `https://dummyjson.com/users`
 - Products: `https://dummyjson.com/products`
 
-## License
 
-MIT
