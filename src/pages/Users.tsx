@@ -4,6 +4,7 @@ import { AppDispatch, RootState } from '../store';
 import { fetchUsers, setSearchTerm, setPageSize, setCurrentPage } from '../store/usersSlice';
 import DataTable from '../components/DataTable';
 import Pagination from '../components/Pagination';
+import { User } from '../types/types';
 
 const columns = [
   { key: 'id', label: 'ID', filterable: true },
@@ -19,22 +20,6 @@ const columns = [
   { key: 'bloodGroup', label: 'Blood Group' },
   { key: 'eyeColor', label: 'Eye Color' },
 ];
-
-// Define the User interface (ensure this matches the shape of your user data)
-interface User {
-  id: number;
-  firstName: string;
-  lastName: string;
-  maidenName: string;
-  age: number;
-  gender: string;
-  email: string;
-  phone: string;
-  username: string;
-  birthDate: string;
-  bloodGroup: string;
-  eyeColor: string;
-}
 
 const Users = () => {
   const dispatch = useDispatch<AppDispatch>();

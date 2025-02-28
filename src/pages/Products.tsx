@@ -10,6 +10,7 @@ import {
 } from '../store/productsSlice';
 import DataTable from '../components/DataTable';
 import Pagination from '../components/Pagination';
+import { Product } from '../types/types';
 
 const columns = [
   { key: 'id', label: 'ID' },
@@ -20,18 +21,11 @@ const columns = [
   { key: 'rating', label: 'Rating' },
   { key: 'stock', label: 'Stock' },
   { key: 'discountPercentage', label: 'Discount' },
+  { key: 'sku', label: 'Sku' },
+  { key: 'weight', label: 'Weight' },
+  { key: 'availabilityStatus', label: 'Availability' },
+  { key: 'minimumOrderQuantity', label: 'Min Order' },
 ];
-
-interface Product {
-  id: number;
-  title: string;
-  brand: string;
-  category: string;
-  price: number;
-  rating: number;
-  stock: number;
-  discountPercentage: number;
-}
 
 const Products = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -79,7 +73,7 @@ const Products = () => {
         <div className="space-x-2">
           <button
             onClick={() => dispatch(setActiveTab('ALL'))}
-            className={`px-4 py-2 rounded ${
+            className={`px-4 py-2 cursor-pointer rounded ${
               activeTab === 'ALL' ? 'bg-primary text-white' : 'bg-white'
             }`}
           >
@@ -87,7 +81,7 @@ const Products = () => {
           </button>
           <button
             onClick={() => dispatch(setActiveTab('LAPTOPS'))}
-            className={`px-4 py-2 rounded ${
+            className={`px-4 py-2 cursor-pointer  rounded ${
               activeTab === 'LAPTOPS' ? 'bg-primary text-white' : 'bg-white'
             }`}
           >

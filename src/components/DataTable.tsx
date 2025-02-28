@@ -58,6 +58,9 @@ const DataTable = ({
 const filteredData = useMemo(() => {
   return data.filter((item) =>
     columns.every((column) => {
+      if (column.key === 'gender' && activeFilters['gender']) {
+        return item['gender'] === activeFilters['gender'];
+      }
       if (activeFilters[column.key]) {
         return item[column.key]
           .toString()
@@ -78,7 +81,7 @@ const filteredData = useMemo(() => {
             <select
               value={pageSize}
               onChange={(e) => onPageSizeChange(Number(e.target.value))}
-              className="border rounded px-3 py-1 bg-white"
+              className="border cursor-pointer rounded px-3 py-1 bg-white"
             >
               {pageSizeOptions.map((size) => (
                 <option key={size} value={size}>
@@ -90,7 +93,7 @@ const filteredData = useMemo(() => {
           <div className="flex items-center space-x-2">
             <button
               onClick={() => setShowSearch(!showSearch)}
-              className="p-2 hover:bg-secondary rounded-full"
+              className="p-2 hover:bg-secondary rounded-full cursor-pointer"
             >
               <Search size={20} />
             </button>
@@ -99,6 +102,18 @@ const filteredData = useMemo(() => {
                 {filters.map((filter) => (
                   <div key={filter.key} className="flex items-center space-x-1 mb-2 sm:mb-0">
                     <span className="text-sm font-medium">{filter.label}:</span>
+                    {filter.key === 'gender' ? (
+                      <select
+                        value={activeFilters['gender'] || ''}
+                        onChange={(e) => handleFilterChange('gender', e.target.value)}
+                        className="border cursor-pointer rounded px-2 py-1 text-sm w-24 sm:w-auto"
+                      >
+                        <option value="">All</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                      </select>
+                      
+                    ) : (
                     <input
                       type="text"
                       value={activeFilters[filter.key] || ''}
@@ -106,6 +121,7 @@ const filteredData = useMemo(() => {
                       placeholder={filter.label}
                       className="border rounded px-2 py-1 text-sm w-24 sm:w-auto"
                     />
+                  )}
                   </div>
                 ))}
               </div>
