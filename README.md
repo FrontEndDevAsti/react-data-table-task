@@ -1,54 +1,90 @@
-# React + TypeScript + Vite
+# React Data Table Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React application built with TypeScript that displays data from the DummyJSON API in a responsive and interactive data table.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Two main pages: Users and Products
+- Reusable components across pages
+- Data fetching with Axios
+- State management with Redux Toolkit
+- Responsive design with Tailwind CSS
+- Custom pagination
+- Client-side filtering
+- Server-side pagination
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- React 18
+- TypeScript
+- Redux Toolkit
+- Axios
+- Tailwind CSS
+- Vite
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/react-data-table.git
+cd react-data-table
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+2. Install dependencies:
+```bash
+npm install
+# or
+yarn
 ```
+
+3. Start the development server:
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+4. Open your browser and navigate to `http://localhost:5173`
+
+## Project Structure
+
+```
+src/
+├── components/         # Reusable components
+│   ├── DataTable.tsx   # Main data table component
+│   ├── Navbar.tsx      # Navigation component
+│   └── Pagination.tsx  # Pagination component
+├── pages/              # Page components
+│   ├── Users.tsx       # Users page
+│   └── Products.tsx    # Products page
+├── store/              # Redux store
+│   ├── index.ts        # Store configuration
+│   ├── usersSlice.ts   # Users state management
+│   └── productsSlice.ts # Products state management
+├── utils/              # Utility functions
+│   └── api.ts          # API service functions
+├── App.tsx             # Main application component
+└── main.tsx            # Entry point
+```
+
+## Routes
+
+- `/users` - Displays a table of users with filtering and pagination
+- `/products` - Displays a table of products with filtering, pagination, and category tabs
+
+## API
+
+This project uses the [DummyJSON API](https://dummyjson.com/) for fetching data:
+- Users: `https://dummyjson.com/users`
+- Products: `https://dummyjson.com/products`
+
+## License
+
+MIT
