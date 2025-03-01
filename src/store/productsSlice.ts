@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import axios from 'axios';
-import { Product } from '../types/types';
+import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { Product } from "../types/types";
+import { fetchProductsAPI } from "../utils/api";
 
 interface ProductsState {
   items: Product[];
@@ -10,7 +10,7 @@ interface ProductsState {
   searchTerm: string;
   pageSize: number;
   currentPage: number;
-  activeTab: 'ALL' | 'LAPTOPS';
+  activeTab: "ALL" | "LAPTOPS";
 }
 
 const initialState: ProductsState = {
@@ -18,10 +18,10 @@ const initialState: ProductsState = {
   total: 0,
   loading: false,
   error: null,
-  searchTerm: '',
+  searchTerm: "",
   pageSize: 5,
   currentPage: 1,
-  activeTab: 'ALL',
+  activeTab: "ALL",
 };
 
 interface FetchProductsArgs {
@@ -31,18 +31,14 @@ interface FetchProductsArgs {
 }
 
 export const fetchProducts = createAsyncThunk(
-  'products/fetchProducts',
+  "products/fetchProducts",
   async ({ limit, skip, category }: FetchProductsArgs) => {
-    const url = category 
-      ? `https://dummyjson.com/products/category/${category}?limit=${limit}&skip=${skip}`
-      : `https://dummyjson.com/products?limit=${limit}&skip=${skip}`;
-    const response = await axios.get(url);
-    return response.data;
+    return await fetchProductsAPI({ limit, skip, category });
   }
 );
 
 const productsSlice = createSlice({
-  name: 'products',
+  name: "products",
   initialState,
   reducers: {
     setSearchTerm: (state, action: PayloadAction<string>) => {
@@ -55,7 +51,7 @@ const productsSlice = createSlice({
     setCurrentPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
     },
-    setActiveTab: (state, action: PayloadAction<'ALL' | 'LAPTOPS'>) => {
+    setActiveTab: (state, action: PayloadAction<"ALL" | "LAPTOPS">) => {
       state.activeTab = action.payload;
       state.currentPage = 1;
     },
@@ -73,10 +69,11 @@ const productsSlice = createSlice({
       })
       .addCase(fetchProducts.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message || 'Failed to fetch products';
+        state.error = action.error.message || "Failed to fetch products";
       });
   },
 });
 
-export const { setSearchTerm, setPageSize, setCurrentPage, setActiveTab } = productsSlice.actions;
+export const { setSearchTerm, setPageSize, setCurrentPage, setActiveTab } =
+  productsSlice.actions;
 export default productsSlice.reducer;

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom"; // For detecting route
+import { useLocation } from "react-router-dom";
 import { Search } from "lucide-react";
 import { FaSortDown } from "react-icons/fa";
 
