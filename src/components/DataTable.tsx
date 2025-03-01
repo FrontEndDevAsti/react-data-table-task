@@ -127,7 +127,7 @@ const DataTable = ({
                 type="text"
                 value={searchTerm}
                 onChange={(e) => onSearchChange(e.target.value)}
-                placeholder="Search"
+                placeholder="Search all..."
                 className="border rounded px-2 py-1 text-sm w-32 sm:w-48"
                 onBlur={handleSearchBlur}
               />
@@ -146,25 +146,25 @@ const DataTable = ({
                   <FaSortDown className="mb-1" />
                 </button>
                 {openFilter === filter.key && (
-                  <div className="absolute z-10 mt-1 bg-white border rounded shadow-lg w-30">
+                  <div className="absolute z-10 mt-1 bg-white border rounded shadow-lg p-3 w-48">
                     {filter.key === "gender" ? (
                       <div className="flex flex-col space-y-1">
                         <button
                           onClick={() => handleFilterChange("gender", "male")}
-                          className="text-center px-3 py-1 hover:bg-gray-100 rounded"
+                          className="text-left px-3 py-1 hover:bg-gray-100 rounded"
                         >
                           Male
                         </button>
                         <button
                           onClick={() => handleFilterChange("gender", "female")}
-                          className="text-center px-3 py-1 hover:bg-gray-100 rounded"
+                          className="text-left px-3 py-1 hover:bg-gray-100 rounded"
                         >
                           Female
                         </button>
                         {activeFilters["gender"] && (
                           <button
                             onClick={() => handleFilterChange("gender", "")}
-                            className="text-center px-3 py-1 text-red-500 hover:bg-gray-100 rounded"
+                            className="text-left px-3 py-1 text-red-500 hover:bg-gray-100 rounded"
                           >
                             Clear filter
                           </button>
