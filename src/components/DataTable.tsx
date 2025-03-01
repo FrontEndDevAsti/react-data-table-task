@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom"; // For detecting route
 import { Search } from "lucide-react";
 import { FaSortDown } from "react-icons/fa";
@@ -32,7 +32,9 @@ const DataTable = ({
 }: DataTableProps) => {
   const location = useLocation(); // Get the current route
   const [showSearch, setShowSearch] = useState(false);
-  const [activeFilters, setActiveFilters] = useState<Record<string, string>>({});
+  const [activeFilters, setActiveFilters] = useState<Record<string, string>>(
+    {}
+  );
   const [openFilter, setOpenFilter] = useState<string | null>(null);
   const [showPageSize, setShowPageSize] = useState(false);
   const pageSizeOptions = [5, 10, 20, 50];
@@ -83,6 +85,22 @@ const DataTable = ({
     }
   };
 
+  const filterRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        filterRef.current &&
+        !filterRef.current.contains(event.target as Node)
+      ) {
+        setOpenFilter(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <div className="bg-white rounded-lg shadow">
       <div className="p-4 flex flex-wrap justify-between items-center border-b">
@@ -92,9 +110,7 @@ const DataTable = ({
               onClick={() => setShowPageSize(!showPageSize)}
               className="flex items-center cursor-pointer space-x-1 px-3 py-2 rounded hover:bg-gray-50"
             >
-              <span className="text-sm font-medium">
-                {pageSize} entries
-              </span>
+              <span className="text-sm font-medium">{pageSize} entries</span>
               <FaSortDown className="mb-1" />
             </button>
             {showPageSize && (
@@ -135,7 +151,10 @@ const DataTable = ({
           </div>
 
           {/* Dropdown filters */}
-          <div className="flex flex-wrap space-x-4 sm:space-x-6 mt-2 sm:mt-0">
+          <div
+            ref={filterRef}
+            className="flex flex-wrap space-x-4 sm:space-x-6 mt-2 sm:mt-0"
+          >
             {filters.map((filter) => (
               <div key={filter.key} className="relative">
                 <button
