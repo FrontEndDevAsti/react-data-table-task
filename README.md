@@ -71,10 +71,13 @@ src/
 │   ├── index.ts        # Store configuration
 │   ├── usersSlice.ts   # Users state management
 │   └── productsSlice.ts # Products state management
+├── types/              # Type definitions
+│   └── types.ts        # Shared TypeScript types
 ├── utils/              # Utility functions
 │   └── api.ts          # API service functions
 ├── App.tsx             # Main application component
 └── main.tsx            # Entry point
+
 ```
 
 ## Routes
