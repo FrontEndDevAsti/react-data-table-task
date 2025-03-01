@@ -54,6 +54,7 @@ yarn dev
 - Lucide React
 - Tailwind CSS
 - Vite
+- React Icons
    
 
 ## Project Structure
