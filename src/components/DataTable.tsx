@@ -127,7 +127,7 @@ const DataTable = ({
                 type="text"
                 value={searchTerm}
                 onChange={(e) => onSearchChange(e.target.value)}
-                placeholder="Search all..."
+                placeholder="Search"
                 className="border rounded px-2 py-1 text-sm w-32 sm:w-48"
                 onBlur={handleSearchBlur}
               />
@@ -146,7 +146,7 @@ const DataTable = ({
                   <FaSortDown className="mb-1" />
                 </button>
                 {openFilter === filter.key && (
-                  <div className="absolute z-10 mt-1 bg-white border rounded shadow-lg w-20">
+                  <div className="absolute z-10 mt-1 bg-white border rounded shadow-lg w-30">
                     {filter.key === "gender" ? (
                       <div className="flex flex-col space-y-1">
                         <button
