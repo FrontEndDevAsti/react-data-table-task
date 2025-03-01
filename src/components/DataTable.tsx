@@ -127,7 +127,7 @@ const DataTable = ({
                 type="text"
                 value={searchTerm}
                 onChange={(e) => onSearchChange(e.target.value)}
-                placeholder="Search all..."
+                placeholder="Search"
                 className="border rounded px-2 py-1 text-sm w-32 sm:w-48"
                 onBlur={handleSearchBlur}
               />
