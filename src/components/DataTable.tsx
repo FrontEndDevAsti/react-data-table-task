@@ -1,6 +1,7 @@
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import { useLocation } from 'react-router-dom'; // For detecting route
-import { Search } from 'lucide-react';
+import { Search, ChevronDown } from 'lucide-react';
+import { FaSortDown } from 'react-icons/fa';
 
 interface Column {
   key: string;
@@ -24,16 +25,21 @@ const DataTable = ({
   columns,
   pageSize,
   onPageSizeChange,
+  searchTerm,
+  onSearchChange,
   loading,
   onFilterChange,
 }: DataTableProps) => {
   const location = useLocation(); // Get the current route
   const [showSearch, setShowSearch] = useState(false);
   const [activeFilters, setActiveFilters] = useState<Record<string, string>>({});
+  const [openFilter, setOpenFilter] = useState<string | null>(null);
   const pageSizeOptions = [5, 10, 20, 50];
 
   // Detect if the current route is /products
   const isProductsPage = location.pathname === '/products';
+
+  // Filters based on route
   const filters = isProductsPage
     ? [
         { key: 'title', label: 'Title' },
@@ -48,30 +54,33 @@ const DataTable = ({
       ];
 
   const handleFilterChange = (key: string, value: string) => {
-    const newFilters = { ...activeFilters, [key]: value };
+    const newFilters = { [key]: value };
     setActiveFilters(newFilters);
     if (onFilterChange) {
       onFilterChange(key, value);
     }
   };
 
-const filteredData = useMemo(() => {
-  return data.filter((item) =>
-    columns.every((column) => {
-      if (column.key === 'gender' && activeFilters['gender']) {
-        return item['gender'] === activeFilters['gender'];
+  const toggleFilter = (key: string) => {
+    if (openFilter !== key) {
+      setActiveFilters({});
+      if (onFilterChange) {
+        onFilterChange('', '');
       }
-      if (activeFilters[column.key]) {
-        return item[column.key]
-          .toString()
-          .toLowerCase()
-          .includes(activeFilters[column.key].toLowerCase()); // Ensure case-insensitive comparison
-      }
-      return true;
-    })
-  );
-}, [data, activeFilters, columns]);
+    }
+    
+    if (openFilter === key) {
+      setOpenFilter(null);
+    } else {
+      setOpenFilter(key);
+    }
+  };
 
+  const handleSearchBlur = () => {
+    if (!searchTerm) {
+      onSearchChange('');
+    }
+  };
 
   return (
     <div className="bg-white rounded-lg shadow">
@@ -98,34 +107,70 @@ const filteredData = useMemo(() => {
               <Search size={20} />
             </button>
             {showSearch && (
-              <div className="flex flex-wrap space-x-4">
-                {filters.map((filter) => (
-                  <div key={filter.key} className="flex items-center space-x-1 mb-2 sm:mb-0">
-                    <span className="text-sm font-medium">{filter.label}:</span>
-                    {filter.key === 'gender' ? (
-                      <select
-                        value={activeFilters['gender'] || ''}
-                        onChange={(e) => handleFilterChange('gender', e.target.value)}
-                        className="border cursor-pointer rounded px-2 py-1 text-sm w-24 sm:w-auto"
-                      >
-                        <option value="">All</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                      </select>
-                      
-                    ) : (
-                    <input
-                      type="text"
-                      value={activeFilters[filter.key] || ''}
-                      onChange={(e) => handleFilterChange(filter.key, e.target.value)}
-                      placeholder={filter.label}
-                      className="border rounded px-2 py-1 text-sm w-24 sm:w-auto"
-                    />
-                  )}
-                  </div>
-                ))}
-              </div>
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => onSearchChange(e.target.value)}
+                placeholder="Search all..."
+                className="border rounded px-2 py-1 text-sm w-32"
+                onBlur={handleSearchBlur}
+              />
             )}
+          </div>
+
+          {/* Dropdown filters */}
+          <div className="flex space-x-4">
+            {filters.map(filter => (
+              <div key={filter.key} className="relative">
+                <button
+                  onClick={() => toggleFilter(filter.key)}
+                  className="flex items-center cursor-pointer space-x-1 px-3 py-2 rounded hover:bg-gray-50"
+                >
+                  <span className="text-sm font-medium">{filter.label}</span>
+                  {/* <ChevronDown size={16} /> */}
+                  
+                  <FaSortDown className='mb-1' />
+                </button>
+                {openFilter === filter.key && (
+                  <div className="absolute z-10 mt-1 bg-white border rounded shadow-lg p-3 w-48">
+                    {filter.key === 'gender' ? (
+                      <div className="flex flex-col space-y-1">
+                        <button
+                          onClick={() => handleFilterChange('gender', 'male')}
+                          className="text-left px-3 py-1 hover:bg-gray-100 rounded"
+                        >
+                          Male
+                        </button>
+                        <button
+                          onClick={() => handleFilterChange('gender', 'female')}
+                          className="text-left px-3 py-1 hover:bg-gray-100 rounded"
+                        >
+                          Female
+                        </button>
+                        {activeFilters['gender'] && (
+                          <button
+                            onClick={() => handleFilterChange('gender', '')}
+                            className="text-left px-3 py-1 text-red-500 hover:bg-gray-100 rounded"
+                          >
+                            Clear filter
+                          </button>
+                        )}
+                      </div>
+                    ) : (
+                      <input
+                        type="text"
+                        value={activeFilters[filter.key] || ''}
+                        onChange={(e) => handleFilterChange(filter.key, e.target.value)}
+                        placeholder={`Filter by ${filter.label.toLowerCase()}`}
+                        className="border rounded px-3 py-1 text-sm w-40"
+                        autoFocus
+                        onClick={(e) => e.stopPropagation()}
+                      />
+                    )}
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -151,14 +196,14 @@ const filteredData = useMemo(() => {
                   Loading...
                 </td>
               </tr>
-            ) : filteredData.length === 0 ? (
+            ) : data.length === 0 ? (
               <tr>
                 <td colSpan={columns.length} className="px-6 py-4 text-center border border-gray-300">
                   No data found
                 </td>
               </tr>
             ) : (
-              filteredData.map((item, index) => (
+              data.map((item, index) => (
                 <tr key={item.id} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                   {columns.map((column) => (
                     <td key={`${item.id}-${column.key}`} className="px-6 py-4 text-sm border border-gray-300">

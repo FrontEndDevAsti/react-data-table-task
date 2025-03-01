@@ -21,3 +21,33 @@ body {
   font-family: 'Neutra Text', sans-serif;
   background-color: #ebebeb;
 }
+/* Container for custom select */
+.custom-select-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Style for select box, hide default arrow */
+.custom-select {
+  appearance: none; /* Hide default dropdown arrow */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 8px; /* Space for the icon */
+
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+
+}
+
+/* Positioning the custom arrow icon */
+.custom-arrow {
+  position: absolute;
+  right: 4px;
+  top: 45%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  color: #000000;
+  pointer-events: none;
+}
+

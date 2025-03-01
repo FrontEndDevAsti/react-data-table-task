@@ -13,7 +13,7 @@ import Pagination from '../components/Pagination';
 import { Product } from '../types/types';
 
 const columns = [
-  { key: 'id', label: 'ID' },
+  { key: 'id', label: 'ID', filterable: true },
   { key: 'title', label: 'Title', filterable: true },
   { key: 'brand', label: 'Brand', filterable: true },
   { key: 'category', label: 'Category', filterable: true },
@@ -50,19 +50,49 @@ const Products = () => {
   }, [dispatch, pageSize, currentPage, activeTab]);
 
   const handleFilterChange = (key: string, value: string) => {
-    setFilters(prev => ({ ...prev, [key]: value }));
+    // Reset other filters when one is used (as per requirement)
+    setFilters({ [key]: value });
   };
 
-  const filteredData = items.filter((product: Product) => {
-    // Apply all active filters
+  const filteredData = items.filter((product) => {
+    // First apply global search if present
+    if (searchTerm) {
+      const searchTermLower = searchTerm.toLowerCase();
+      const productValues = Object.values(product).map(val =>
+        val ? val.toString().toLowerCase() : ''
+      );
+      if (!productValues.some(val => val.includes(searchTermLower))) {
+        return false;
+      }
+    }
+  
+    // Then apply specific filters
     return Object.entries(filters).every(([key, value]) => {
       if (!value) return true;
-      return product[key as keyof Product] && product[key as keyof Product]
-        .toString()
-        .toLowerCase()
-        .includes(value.toLowerCase());
+  
+      // TypeScript now knows that key is a valid key of Product
+      const typedKey = key as keyof Product;
+  
+      // Special case for product's title filter
+      if (typedKey === 'title' && value) {
+        return product.title && product.title.toLowerCase().includes(value.toLowerCase());
+      }
+  
+      // Special case for product's brand filter
+      if (typedKey === 'brand' && value) {
+        return product.brand && product.brand.toLowerCase().includes(value.toLowerCase());
+      }
+  
+      // Special case for product's category filter
+      if (typedKey === 'category' && value) {
+        return product.category && product.category.toLowerCase().includes(value.toLowerCase());
+      }
+  
+      // For other filters (like price, stock, etc.)
+      return product[typedKey] && product[typedKey].toString().toLowerCase().includes(value.toLowerCase());
     });
   });
+  
 
   const totalPages = Math.ceil(total / pageSize);
 
